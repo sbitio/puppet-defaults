@@ -1,4 +1,5 @@
 class defaults {
+  create_resources(sshkey, hiera_hash('sshkeys', {}))
   create_resources(defaults::useraccount, hiera_hash('useraccount', {}))
   $groups = hiera_array('groups')
   group { $groups:
