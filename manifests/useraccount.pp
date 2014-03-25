@@ -2,6 +2,7 @@
 define defaults::useraccount(
   $ensure   = present,
   $uid      = '',
+  $gid      = undef,
   $groups   = [],
   $shell    = '/bin/bash',
   $password = '',
@@ -13,7 +14,10 @@ define defaults::useraccount(
 
   user { "$username":
     ensure     => $ensure,
-    gid        => $username,
+    gid        => $gid ? {
+      undef   => $username,
+      default => $gid,
+    },
     groups     => $groups,
     comment    => "$fullname,,,",
     home       => "/home/$username",
