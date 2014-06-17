@@ -20,6 +20,25 @@ class defaults {
         content  => $sudo_content,
       }
     }
+    sudo::conf { 'ansible':
+      priority => 10,
+      content  => 'ansible ALL=NOPASSWD: ALL',
+    }
+    if ($is_vagrant) {
+      sudo::conf { 'vagrant':
+        priority => 00,
+        content  => 'vagrant ALL=NOPASSWD:ALL',
+      }
+    }
+    if ( $::ec2_ami_id != '' and $::operatingsystem == 'Debian') {
+      sudo::conf { 'cloud-init-users':
+        priority => 90,
+        content => '# Created by cloud-init v. 0.7.2 on Tue, 25 Mar 2014 11:32:28 +0000
+
+# User rules for admin
+admin ALL=(ALL) NOPASSWD:ALL',
+      }
+    }
   }
 #  $forward_root_email = hiera('forward_root_email', [])
 #  if $forward_root_email != [] {
