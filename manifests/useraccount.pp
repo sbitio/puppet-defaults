@@ -65,6 +65,7 @@ define defaults::useraccount(
   Ssh_authorized_key {
     user    => $username,
   }
+  # TODO: add helper define to avoid key_name collitions
   #notify {"user keys: ${ssh_keys}":}
   if $ssh_keys != {} and $ensure == present {
     create_resources(ssh_authorized_key, $ssh_keys)
