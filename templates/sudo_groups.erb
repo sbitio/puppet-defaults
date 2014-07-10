@@ -2,6 +2,6 @@
 # defaults_sudo_groups
 <% if @sudo_groups -%>
 <% @sudo_groups.each do |group| -%>
-%<%= group %> ALL=(ALL) <%= @sudo_passwd_polycy %>: ALL
+%<%= group %> ALL=(ALL) <%= @sudo_passwd_policy %>: ALL
 <% end -%>
 <% end -%>

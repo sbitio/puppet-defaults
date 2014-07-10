@@ -10,7 +10,10 @@ class defaults {
     ensure => present,
   }
   if defined(sudo::conf){
-    $sudo_passwd_polycy = hiera('sudo_passwd_polycy', 'PASSWD')
+    if hiera('sudo_passwd_polycy', '') != '' {
+      notify {"DEPRECATED sudo_passwd_polycy, use sudo_passwd_policy instead" : }
+    }
+    $sudo_passwd_policy = hiera('sudo_passwd_policy', hiera('sudo_passwd_polycy', 'PASSWD') )
     $sudo_groups        = hiera_array('sudo_groups', [])
     if $sudo_groups != [] {
       Group[$sudo_groups] -> Sudo::Conf <| |>
