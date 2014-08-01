@@ -5,10 +5,9 @@ class defaults {
   group { $groups:
     ensure => present,
   }
-  $extra_packages = hiera_array('extra_packages', [])
-  package { $extra_packages:
-    ensure => present,
-  }
+
+  ensure_packages(hiera_array('extra_packages', []))
+
   if defined(sudo::conf){
     if hiera('sudo_passwd_polycy', '') != '' {
       notify {"DEPRECATED sudo_passwd_polycy, use sudo_passwd_policy instead" : }
