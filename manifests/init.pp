@@ -29,7 +29,8 @@ class defaults {
     if ($is_vagrant) {
       sudo::conf { 'vagrant':
         priority => 00,
-        content  => 'vagrant ALL=NOPASSWD:ALL',
+        content  => 'vagrant ALL=NOPASSWD:ALL
+Defaults:vagrant !requiretty',
       }
     }
     if ( $::ec2_ami_id != '' and $::operatingsystem == 'Debian') {
