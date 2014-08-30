@@ -1,31 +1,23 @@
 class defaults {
-  # OLD nodes
-  create_resources(sshkey, hiera_hash('sshkeys', {}))
-  create_resources(defaults::useraccount, hiera_hash('useraccount', {}))
-  $groups = hiera_array('groups')
-  group { $groups:
-    ensure => present,
-  }
-  ensure_packages(hiera_array('extra_packages', []))
 
   # NG
   ## sshkeys
-  #  $sshkey_defaults = hiera('defaults::sshkey::defaults', {})
-  #  $sshkeys         = hiera_hash('defaults::sshkeys', {})
-  #  create_resources('sshkey', $ssh_keys, $sshkey_defaults)
-  #  ## useraccounts
-  #  $useraccount_defaults = hiera('defaults::useraccount::defaults', {})
-  #  $useraccounts         = hiera_hash('defaults::useraccounts', {})
-  #  create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
-  #  ## groups
-  #  $groups         = hiera_array('defaults::groups', {})
-  #  create_resources('group', $groups, $group_defaults)
-  #  group { $groups:
-  #    ensure => present,
-  #  }
-  #  ## packages
-  #  $packages         = hiera_array('defaults::packages', [])
-  #  ensure_packages($packages)
+  $sshkey_defaults = hiera('defaults::sshkey::defaults', {})
+  $sshkeys         = hiera_hash('defaults::sshkeys', {})
+  create_resources('sshkey', $sshkeys, $sshkey_defaults)
+  ## useraccounts
+  $useraccount_defaults = hiera('defaults::useraccount::defaults', {})
+  $useraccounts         = hiera_hash('defaults::useraccounts', {})
+  create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
+  ## groups
+  $groups         = hiera_array('defaults::groups', {})
+  create_resources('group', $groups, $group_defaults)
+  group { $groups:
+    ensure => present,
+  }
+  ## packages
+  $extra_packages         = hiera_array('defaults::extra_packages', [])
+  ensure_packages($extra_packages)
   ## scripts
   $script_defaults = hiera('defaults::script::defaults', {})
   $scripts         = hiera_hash('defaults::scripts', {})
