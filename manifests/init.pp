@@ -1,6 +1,8 @@
 class defaults {
 
   # NG
+  ## root
+  include ::defaults::root_user
   ## sshkeys
   $sshkey_defaults = hiera('defaults::sshkey::defaults', {})
   $sshkeys         = hiera_hash('defaults::sshkeys', {})
