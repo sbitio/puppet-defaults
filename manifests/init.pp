@@ -11,7 +11,6 @@ class defaults {
   create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
   ## groups
   $groups         = hiera_array('defaults::groups', {})
-  create_resources('group', $groups, $group_defaults)
   group { $groups:
     ensure => present,
   }
