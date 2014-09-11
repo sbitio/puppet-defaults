@@ -17,8 +17,12 @@ class defaults {
     ensure => present,
   }
   ## packages
-  $extra_packages         = hiera_array('defaults::extra_packages', [])
+  $extra_packages = hiera_array('defaults::extra_packages', [])
   ensure_packages($extra_packages)
+  ## hosts
+  $host_defaults = hiera('defaults::host::defaults', {})
+  $hosts         = hiera_hash('defaults::hosts', {})
+  create_resources('host', $hosts, $host_defaults)
   ## scripts
   $script_defaults = hiera('defaults::script::defaults', {})
   $scripts         = hiera_hash('defaults::scripts', {})
