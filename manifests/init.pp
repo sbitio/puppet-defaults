@@ -1,4 +1,4 @@
-class defaults inherits defaults::params {
+class defaults inherits ::defaults::params {
 
   # Root account.
   include ::defaults::root_user

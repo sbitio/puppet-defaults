@@ -1,36 +1,36 @@
 define defaults::script (
-  $ensure      = present,
-  $script_root = undef,
-  $souce_root  = undef,
-  $cron        = {},
+  $ensure  = present,
+  $basedir = undef,
+  $source  = undef,
+  $cron    = {},
 ) {
 
-  # TODO: add stdlib dependency
+  # Ensure basedir.
   $ensure_dir = $ensure ? {
     present => directory,
-    default => $ensure,
+    default => $ensure
   }
-  $script_root_real = $script_root ? {
-    undef   => $::defaults::params::script_root,
-    default => $script_root,
+  $basedir_real = pick($basedir, $::defaults::params::scripts_basedir)
+  ensure_resource('file', $basedir_real, {ensure => $ensure_dir})
+
+  # Ensure script.
+  $filename    = regsubst($name, '/', '_')
+  $script_path = "${basedir_real}/${filename}"
+  $source_real = pick($source, $::defaults::params::scripts_source)
+  file { $script_path:
+    ensure  => $ensure,
+    source  => "${source_real}/${name}",
+    require => File[$basedir_real],
   }
-  $source_root_real = $souce_root ? {
-    undef   => $::defaults::params::source_root,
-    default => $source_root,
+
+  # Cron task.
+  if $cron {
+    $cron_params = {
+      ensure => $ensure,
+      command => $script_path,
+    }
+    create_resources('cron', { "cron-script-${filename}" => $cron }, $cron_params)
   }
-  ensure_resource(file, $script_root_real, { ensure => $ensure_dir })
-  $filename = regsubst($name,'/','_')
-  $full_filename = "${script_root_real}/${filename}"
-  file { $full_filename :
-    ensure  => $ensure ? {
-      present => file, 
-      default => $ensure,
-    },
-    source  => "${source_root_real}/${name}",
-    require => File[$script_root_real],
-  } 
-  if ! empty($cron) {
-    $cron_merge = merge({ ensure => $ensure, command => $full_filename }, $cron)
-    create_resources(cron, { "defaults::script-${filename}" => $cron_merge }, {})
-  } 
-} 
+
+}
+
