@@ -4,7 +4,7 @@ define defaults::script (
   $souce_root  = undef,
   $cron        = {},
 ) {
-  require defaults::params
+
   # TODO: add stdlib dependency
   $ensure_dir = $ensure ? {
     present => directory,

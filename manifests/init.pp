@@ -1,31 +1,37 @@
-class defaults {
+class defaults inherits defaults::params {
 
-  # NG
-  ## root
+  # Root account.
   include ::defaults::root_user
-  ## sshkeys
+
+  ## SSH keys.
   $sshkey_defaults = hiera('defaults::sshkey::defaults', {})
-  $sshkeys         = hiera_hash('defaults::sshkeys', {})
+  $sshkeys = hiera_hash('defaults::sshkeys', {})
   create_resources('sshkey', $sshkeys, $sshkey_defaults)
-  ## useraccounts
+
+  # User Accounts.
   $useraccount_defaults = hiera('defaults::useraccount::defaults', {})
-  $useraccounts         = hiera_hash('defaults::useraccounts', {})
+  $useraccounts = hiera_hash('defaults::useraccounts', {})
   create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
-  ## groups
-  $groups         = hiera_array('defaults::groups', {})
+
+  # Groups.
+  $groups = hiera_array('defaults::groups', {})
   group { $groups:
     ensure => present,
   }
-  ## packages
+
+  # Packages.
   $extra_packages = hiera_array('defaults::extra_packages', [])
   ensure_packages($extra_packages)
-  ## hosts
+
+  # Hosts.
   $host_defaults = hiera('defaults::host::defaults', {})
   $hosts         = hiera_hash('defaults::hosts', {})
   create_resources('host', $hosts, $host_defaults)
-  ## scripts
+
+  # Scripts.
   $script_defaults = hiera('defaults::script::defaults', {})
   $scripts         = hiera_hash('defaults::scripts', {})
   create_resources('defaults::script', $scripts, $script_defaults)
 
 }
+
