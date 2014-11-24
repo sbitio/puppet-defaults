@@ -5,12 +5,12 @@ class defaults inherits defaults::params {
 
   ## SSH keys.
   $sshkey_defaults = hiera('defaults::sshkey::defaults', {})
-  $sshkeys = hiera_hash('defaults::sshkeys', {})
+  $sshkeys         = hiera_hash('defaults::sshkeys', {})
   create_resources('sshkey', $sshkeys, $sshkey_defaults)
 
   # User Accounts.
   $useraccount_defaults = hiera('defaults::useraccount::defaults', {})
-  $useraccounts = hiera_hash('defaults::useraccounts', {})
+  $useraccounts         = hiera_hash('defaults::useraccounts', {})
   create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
 
   # Groups.
@@ -35,8 +35,7 @@ class defaults inherits defaults::params {
 
   # Cerificates.
   $cert_defaults = hiera('defaults::certs::defaults', {})
-  $certs = hiera_hash('defaults::certs', {})
-  notify {"CERTS": message => $certs}
+  $certs         = hiera_hash('defaults::certs', {})
   create_resources('defaults::cert', $certs, $cert_defaults)
 
 }
