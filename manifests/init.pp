@@ -33,5 +33,11 @@ class defaults inherits defaults::params {
   $scripts         = hiera_hash('defaults::scripts', {})
   create_resources('defaults::script', $scripts, $script_defaults)
 
+  # Cerificates.
+  $cert_defaults = hiera('defaults::certs::defaults', {})
+  $certs = hiera_hash('defaults::certs', {})
+  notify {"CERTS": message => $certs}
+  create_resources('defaults::cert', $certs, $cert_defaults)
+
 }
 
