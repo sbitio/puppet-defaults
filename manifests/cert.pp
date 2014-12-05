@@ -22,7 +22,6 @@ define defaults::cert(
   $params = {
     ensure  => $ensure,
     certdir => $certdir,
-    source  => $source,
     user    => $user,
     group   => $group,
     mode    => $mode,
@@ -33,6 +32,24 @@ define defaults::cert(
       source => $pem,
     }
     ensure_resource('defaults::cert::file', "${name}.pem", merge($pem_params, $params))
+  }
+  if $key {
+    $key_params = {
+      source => $key,
+    }
+    ensure_resource('defaults::cert::file', "${name}.key", merge($key_params, $params))
+  }
+  if $cert {
+    $cert_params = {
+      source => $cert,
+    }
+    ensure_resource('defaults::cert::file', "${name}.cert", merge($cert_params, $params))
+  }
+  if $ca {
+    $ca_params = {
+      source => $ca,
+    }
+    ensure_resource('defaults::cert::file', "${name}.ca", merge($ca_params, $params))
   }
 
 }
