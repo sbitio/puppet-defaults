@@ -10,7 +10,7 @@ define defaults::useraccount(
   $fullname = $title,
   $ssh_keys = {}
 ) {
-#  notify { "name is $name": }
+
   $username = $name
 
   user { "$username":

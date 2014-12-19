@@ -28,6 +28,11 @@ class defaults inherits ::defaults::params {
   $hosts         = hiera_hash('defaults::hosts', {})
   create_resources('host', $hosts, $host_defaults)
 
+  # Files.
+  $files_defaults = hiera('defaults::file::defaults', {})
+  $files          = hiera_hash('defaults::files', {})
+  create_resources('file', $files, $files_defaults)
+
   # Scripts.
   $script_defaults = hiera('defaults::script::defaults', {})
   $scripts         = hiera_hash('defaults::scripts', {})
