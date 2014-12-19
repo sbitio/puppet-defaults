@@ -88,6 +88,17 @@ defaults::hosts :
   legacy   :
     ensure : absent
 
+# Certificates.
+defaults::certs :
+  sbit.io :
+    ca   : "puppet:///files/certs/sbit.io.ca"
+    cert : "puppet:///files/certs/sbit.io.cert"
+    key  : "puppet:///files/certs/sbit.io.key"
+
+  sbitmedia.com :
+    ca    : "puppet:///files/certs/sbitmedia.com.ca"
+    pem   : "puppet:///files/certs/sbitmedia.com.pem"
+
 ```
 
 ## License
