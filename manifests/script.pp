@@ -24,7 +24,7 @@ define defaults::script (
   }
 
   # Cron task.
-  if $cron {
+  if $cron != {} {
     $cron_params = {
       ensure => $ensure,
       command => $script_path,
