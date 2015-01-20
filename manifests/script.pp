@@ -5,13 +5,11 @@ define defaults::script (
   $cron    = {},
 ) {
 
-  # Ensure basedir.
-  $ensure_dir = $ensure ? {
-    present => directory,
-    default => $ensure
-  }
   $basedir_real = pick($basedir, $::defaults::params::scripts_basedir)
-  ensure_resource('file', $basedir_real, {ensure => $ensure_dir})
+  # Ensure basedir only if present to avoid conflicting duplicate declarations.
+  if $ensure == 'present' {
+    ensure_resource('file', $basedir_real, { ensure => 'directory' })
+  }
 
   # Ensure script.
   $filename    = regsubst($name, '/', '_')
