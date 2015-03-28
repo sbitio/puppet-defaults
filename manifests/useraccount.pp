@@ -29,6 +29,17 @@ define defaults::useraccount(
   group { "$username":
     ensure => $ensure,
   }
+  # Ordering of dependencies, just in case
+  case $ensure {
+    present: {
+      User <| title == "$username" |> { require => Group["$username"] }
+      Group[$groups] -> User <| title == "$username" |>
+    }
+    absent: {
+      Group <| title == "$username" |> { require => User["$username"] }
+      User <| title == "$username" |> -> Group[$groups]
+    }
+  }
   # Set password if available
   if $password != '' {
     User <| title == "$username" |> { password => $password }
