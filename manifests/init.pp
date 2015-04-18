@@ -32,6 +32,11 @@ class defaults inherits ::defaults::params {
   $hosts         = hiera_hash('defaults::hosts', {})
   create_resources('host', $hosts, $host_defaults)
 
+  # Crons.
+  $cron_defaults = hiera('defaults::cron::defaults', {})
+  $crons         = hiera_hash('defaults::crons', {})
+  create_resources('cron', $crons, $cron_defaults)
+
   # Files.
   $files_defaults = hiera('defaults::file::defaults', {})
   $files          = hiera_hash('defaults::files', {})
