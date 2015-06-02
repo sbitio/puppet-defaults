@@ -18,7 +18,6 @@ define defaults::script (
   file { $script_path:
     ensure  => $ensure,
     source  => "${source_real}/${name}",
-    require => File[$basedir_real],
   }
 
   # Cron task.
