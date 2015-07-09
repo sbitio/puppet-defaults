@@ -1,3 +1,5 @@
+# == Defined type: defaults::script
+#
 define defaults::script (
   $ensure  = present,
   $basedir = undef,

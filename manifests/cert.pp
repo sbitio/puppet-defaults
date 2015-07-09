@@ -1,3 +1,5 @@
+# == Defined type: defaults::cert
+#
 define defaults::cert(
   $ensure  = present,
   $basedir = undef,

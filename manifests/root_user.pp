@@ -1,3 +1,5 @@
+# == Class: defaults::root_user
+#
 class defaults::root_user (
   $password            = undef,
   $ssh_authorized_keys = {},
@@ -21,3 +23,4 @@ class defaults::root_user (
   )
 
 }
+

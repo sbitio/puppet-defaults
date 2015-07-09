@@ -1,4 +1,7 @@
-# basado en https://github.com/dcsobral/puppet-users/blob/master/manifests/definitions/useraccount.pp
+# == Defined type: defaults::useraccount
+#
+# Based on https://github.com/dcsobral/puppet-users/blob/master/manifests/definitions/useraccount.pp
+#
 define defaults::useraccount(
   $ensure   = present,
   $uid      = '',
