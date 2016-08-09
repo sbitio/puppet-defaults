@@ -16,7 +16,7 @@ class defaults inherits ::defaults::params {
   create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
 
   # Groups.
-  $groups = hiera_array('defaults::groups', {})
+  $groups = hiera_array('defaults::groups', [])
   group { $groups:
     ensure => present,
   }
