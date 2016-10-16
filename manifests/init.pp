@@ -15,6 +15,11 @@ class defaults inherits ::defaults::params {
   $useraccounts         = hiera_hash('defaults::useraccounts', {})
   create_resources('defaults::useraccount', $useraccounts, $useraccount_defaults)
 
+  # Users.
+  $user_defaults = hiera('defaults::user::defaults', {})
+  $users         = hiera_hash('defaults::users', {})
+  create_resources('user', $users, $user_defaults)
+
   # Groups.
   $groups = hiera_array('defaults::groups', [])
   group { $groups:
