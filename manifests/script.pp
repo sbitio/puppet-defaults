@@ -4,6 +4,9 @@ define defaults::script (
   $ensure  = present,
   $basedir = undef,
   $source  = undef,
+  $owner   = 'root',
+  $group   = 'root',
+  $mode    = '0500',
   $cron    = {},
 ) {
 
@@ -18,14 +21,17 @@ define defaults::script (
   $script_path = "${basedir_real}/${filename}"
   $source_real = pick($source, $::defaults::params::scripts_source)
   file { $script_path:
-    ensure  => $ensure,
-    source  => "${source_real}/${name}",
+    ensure => $ensure,
+    source => "${source_real}/${name}",
+    owner  => $owner,
+    group  => $group,
+    mode   => $mode,
   }
 
   # Cron task.
   if $cron != {} {
     $cron_params = {
-      ensure => $ensure,
+      ensure  => $ensure,
       command => $script_path,
     }
     create_resources('cron', { "cron-script-${filename}" => $cron }, $cron_params)
