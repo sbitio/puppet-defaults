@@ -46,23 +46,6 @@ define defaults::useraccount(
     User <| title == "$username" |> { password => $password }
   }
 
-  #TODO Asegurar que no se rompen los ids
-  # uid/gid management
-  if $uid != '' {
-    # Manage uid if etcpass is available
-    if $etcpasswd != '' {
-      User <| title == "$username" |> { uid => $uid }
-#      users::uidsanity { "$uid": username => $username }
-    }
-    # Manage gid if etcgroup is available
-    if $etcgroup != '' {
-      User <| title == "$username" |> { gid => $uid }
-      Group <| title == "$username" |> { gid => $uid }
-#      users::gidsanity { "$uid": groupname => $username }
-    }
-  }
-
-
   Ssh_authorized_key {
     user    => $username,
   }
