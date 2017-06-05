@@ -28,9 +28,11 @@ define defaults::useraccount(
     shell      => $shell,
     allowdupe  => false,
     managehome => true,
+    uid        => $uid,
   }
   group { "$username":
     ensure => $ensure,
+    gid    => $gid,
   }
   # Ordering of dependencies, just in case
   case $ensure {
