@@ -4,7 +4,7 @@
 #
 define defaults::useraccount(
   $ensure   = present,
-  $uid      = '',
+  $uid      = undef,
   $gid      = undef,
   $home     = "/home/${name}",
   $groups   = [],
