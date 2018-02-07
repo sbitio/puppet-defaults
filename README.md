@@ -14,6 +14,7 @@ as we find the need, or someone does a request (PRs welcome!).
  * packages
  * hosts
  * files
+ * execs
 
 In addition to basic resource types, there's also support for some common
 needs:
