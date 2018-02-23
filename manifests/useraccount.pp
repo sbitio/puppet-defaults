@@ -48,13 +48,13 @@ define defaults::useraccount(
     User <| title == "$username" |> { password => $password }
   }
 
-  Ssh_authorized_key {
-    user    => $username,
-  }
-  # TODO: add helper define to avoid key_name collitions
-  #notify {"user keys: ${ssh_keys}":}
-  if $ssh_keys != {} and $ensure == present {
-    create_resources(ssh_authorized_key, $ssh_keys)
+  # Create authorized keys
+  $ssh_keys.each |$name, $params| {
+    ssh_authorized_key { "${username}-${name}":
+      ensure => $ensure,
+      user   => $username,
+      *      => $params,
+    }
   }
 
 }
