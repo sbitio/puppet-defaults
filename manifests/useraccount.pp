@@ -49,11 +49,14 @@ define defaults::useraccount(
   }
 
   # Create authorized keys
-  $ssh_keys.each |$name, $params| {
-    ssh_authorized_key { "${username}-${name}":
-      ensure => $ensure,
-      user   => $username,
-      *      => $params,
+  if ($ensure == present) {
+    $ssh_keys.each |$name, $params| {
+      $params_defaults = {
+        user => $username,
+      }
+      ssh_authorized_key { "${username}-${name}":
+        * => merge($params_defaults, $params),
+      }
     }
   }
 
