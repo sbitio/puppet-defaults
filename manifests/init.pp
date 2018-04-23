@@ -69,5 +69,10 @@ class defaults inherits ::defaults::params {
   $certs         = hiera_hash('defaults::certs', {})
   create_resources('defaults::cert', $certs, $cert_defaults)
 
+  # Services.
+  $service_defaults = hiera('defaults::service::defaults', {})
+  $services         = hiera_hash('defaults::services', {})
+  create_resources('service', $services, $service_defaults)
+
 }
 
