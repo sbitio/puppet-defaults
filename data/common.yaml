@@ -1,0 +1,12 @@
+---
+
+lookup_options:
+  defaults::packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
+
+defaults::packages:
+  defaults: {}
+  hash: {}
+  list: []

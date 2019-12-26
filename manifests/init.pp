@@ -1,6 +1,12 @@
 # == Class: defaults
 #
-class defaults inherits ::defaults::params {
+class defaults (
+  Struct[{
+    defaults => Hash,
+    hash     => Hash,
+    list     => Array[String],
+  }] $packages,
+) inherits ::defaults::params {
 
   # Root account.
   include ::defaults::root_user
@@ -27,12 +33,9 @@ class defaults inherits ::defaults::params {
   }
 
   # Packages.
-  $packages_defaults = hiera('defaults::packages::defaults', {})
-  $packages          = hiera_hash('defaults::packages', {})
-  create_resources('package', $packages, $packages_defaults)
+  create_resources('package', $packages['hash'], $packages['defaults'])
 
-  $extra_packages = hiera_array('defaults::extra_packages', [])
-  ensure_packages($extra_packages)
+  ensure_packages($packages['list'])
 
   # Hosts.
   $host_defaults = hiera('defaults::host::defaults', {})
