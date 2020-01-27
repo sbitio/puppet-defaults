@@ -54,6 +54,11 @@ class defaults inherits ::defaults::params {
   $files          = hiera_hash('defaults::files', {})
   create_resources('file', $files, $files_defaults)
 
+  # File lines.
+  $file_line_defaults = hiera('defaults::file_line::defaults', {})
+  $file_lines          = hiera_hash('defaults::file_lines', {})
+  create_resources('file_line', $file_lines, $file_line_defaults)
+
   # Mounts.
   $mounts_defaults = hiera('defaults::mount::defaults', {})
   $mounts          = hiera_hash('defaults::mounts', {})
