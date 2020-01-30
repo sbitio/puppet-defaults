@@ -30,7 +30,7 @@ define defaults::useraccount(
     allowdupe      => false,
     managehome     => true,
     uid            => $uid,
-    purge_ssh_keys => $ purge_ssh_keys,
+    purge_ssh_keys => $purge_ssh_keys,
   }
   group { "$username":
     ensure => $ensure,
