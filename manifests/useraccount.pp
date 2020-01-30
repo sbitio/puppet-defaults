@@ -11,24 +11,26 @@ define defaults::useraccount(
   $shell    = '/bin/bash',
   $password = '',
   $fullname = $title,
+  $purge_ssh_keys = false,
   $ssh_keys = {}
 ) {
 
   $username = $name
 
   user { "$username":
-    ensure     => $ensure,
-    gid        => $gid ? {
+    ensure         => $ensure,
+    gid            => $gid ? {
       undef   => $username,
       default => $gid,
     },
-    groups     => $groups,
-    comment    => "$fullname,,,",
-    home       => $home,
-    shell      => $shell,
-    allowdupe  => false,
-    managehome => true,
-    uid        => $uid,
+    groups         => $groups,
+    comment        => "$fullname,,,",
+    home           => $home,
+    shell          => $shell,
+    allowdupe      => false,
+    managehome     => true,
+    uid            => $uid,
+    purge_ssh_keys => $ purge_ssh_keys,
   }
   group { "$username":
     ensure => $ensure,
