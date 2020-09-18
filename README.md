@@ -42,9 +42,6 @@ processing.
 There're some exceptions, for example for users we provide a `useraccount`
 defined type that manages the user, its groups and ssh keys all together.
 
-Other exception is packages. We support both `defaults::packages` per above
-pattern and also a plain list of packages in `defaults::extra_packages`.
-
 ## Example hiera
 
 This is an example of some supported resource types. See [manifests/init.pp](https://github.com/sbitio/puppet-defaults/blob/master/manifests/init.pp)
@@ -52,19 +49,13 @@ for details on each type.
 
 ```yaml
 
-defaults::packages :
-  molly-guard :
-    provider : 'rpm'
-    source   : "https://github.com/tmhorne/molly-guard/blob/master/rpmbuild/RPMS/noarch/molly-guard-0.4.5-1.1.el6.noarch.rpm?raw=true"
+defaults::packages:
+  molly-guard:
+    provider: 'rpm'
+    source: "https://github.com/tmhorne/molly-guard/blob/master/rpmbuild/RPMS/noarch/molly-guard-0.4.5-1.1.el6.noarch.rpm?raw=true"
   setuptools:
-    provider : 'pip'
-    ensure   : 'latest'
-
-defaults::extra_packages :
-  - 'debian-goodies'
-  - 'heirloom-mailx'
-  - 'lsb-base'
-  - 'lsb-release'
+    provider: 'pip'
+    ensure: 'latest'
 
 defaults::groups :
   - 'teamA'

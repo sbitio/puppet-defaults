@@ -29,10 +29,7 @@ class defaults inherits ::defaults::params {
   # Packages.
   $packages_defaults = hiera('defaults::packages::defaults', {})
   $packages          = hiera_hash('defaults::packages', {})
-  create_resources('package', $packages, $packages_defaults)
-
-  $extra_packages = hiera_array('defaults::extra_packages', [])
-  ensure_packages($extra_packages)
+  ensure_resources('package', $packages, $packages_defaults)
 
   # Hosts.
   $host_defaults = hiera('defaults::host::defaults', {})
