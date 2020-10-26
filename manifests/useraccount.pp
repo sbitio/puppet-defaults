@@ -7,6 +7,7 @@ define defaults::useraccount(
   $uid      = undef,
   $gid      = undef,
   $home     = "/home/${name}",
+  $mode     = '0755',
   $groups   = [],
   $shell    = '/bin/bash',
   $password = '',
@@ -35,6 +36,10 @@ define defaults::useraccount(
   group { "$username":
     ensure => $ensure,
     gid    => $gid,
+  }
+  file { $home:
+    mode => $mode,
+    require => User[$username],
   }
   # Ordering of dependencies, just in case
   case $ensure {
