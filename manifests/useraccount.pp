@@ -3,17 +3,18 @@
 # Based on https://github.com/dcsobral/puppet-users/blob/master/manifests/definitions/useraccount.pp
 #
 define defaults::useraccount(
-  $ensure   = present,
-  $uid      = undef,
-  $gid      = undef,
-  $home     = "/home/${name}",
-  $mode     = '0755',
-  $groups   = [],
-  $shell    = '/bin/bash',
-  $password = '',
-  $fullname = $title,
+  $ensure         = present,
+  $uid            = undef,
+  $gid            = undef,
+  $home           = "/home/${name}",
+  $mode           = '0755',
+  $managehome     = true,
+  $groups         = [],
+  $shell          = '/bin/bash',
+  $password       = '',
+  $fullname       = $title,
   $purge_ssh_keys = false,
-  $ssh_keys = {}
+  $ssh_keys       = {}
 ) {
 
   $username = $name
@@ -29,7 +30,7 @@ define defaults::useraccount(
     home           => $home,
     shell          => $shell,
     allowdupe      => false,
-    managehome     => true,
+    managehome     => $managehome,
     uid            => $uid,
     purge_ssh_keys => $purge_ssh_keys,
   }
@@ -37,10 +38,13 @@ define defaults::useraccount(
     ensure => $ensure,
     gid    => $gid,
   }
-  file { $home:
-    mode => $mode,
-    require => User[$username],
+  if $managehome {
+    file { $home:
+      mode => $mode,
+      require => User[$username],
+    }
   }
+
   # Ordering of dependencies, just in case
   case $ensure {
     present: {
