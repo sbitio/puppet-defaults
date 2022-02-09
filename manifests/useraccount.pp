@@ -23,11 +23,11 @@ define defaults::useraccount(
     default => $gid,
   }
 
-  user { "$username":
+  user { $username:
     ensure         => $ensure,
     gid            => $_real_gid,
     groups         => $groups,
-    comment        => "$fullname,,,",
+    comment        => "${fullname},,,",
     home           => $home,
     shell          => $shell,
     allowdupe      => false,
@@ -35,7 +35,7 @@ define defaults::useraccount(
     uid            => $uid,
     purge_ssh_keys => $purge_ssh_keys,
   }
-  group { "$username":
+  group { $username:
     ensure => $ensure,
     gid    => $gid,
   }
@@ -49,10 +49,10 @@ define defaults::useraccount(
   # Ordering of dependencies, just in case
   case $ensure {
     present: {
-      User <| title == "$username" |> { require => Group["$username"] }
+      User <| title == $username |> { require => Group[$username] }
     }
     absent: {
-      Group <| title == "$username" |> { require => User["$username"] }
+      Group <| title == $username |> { require => User[$username] }
     }
     default: {
       fail('ensure parameter must be present or absent')
@@ -60,7 +60,7 @@ define defaults::useraccount(
   }
   # Set password if available
   if $password != '' {
-    User <| title == "$username" |> { password => $password }
+    User <| title == $username |> { password => $password }
   }
 
   # Create authorized keys
