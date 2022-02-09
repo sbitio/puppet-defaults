@@ -1,3 +1,7 @@
+# defaults::cert::file
+#
+# This defined type is responsible of creating a file with the given parameters
+#
 define defaults::cert::file(
   $ensure,
   $certdir,
