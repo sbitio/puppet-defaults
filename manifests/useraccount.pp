@@ -53,6 +53,9 @@ define defaults::useraccount(
     absent: {
       Group <| title == "$username" |> { require => User["$username"] }
     }
+    default: {
+      fail('ensure parameter must be present or absent')
+    }
   }
   # Set password if available
   if $password != '' {
