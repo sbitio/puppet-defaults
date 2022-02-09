@@ -18,13 +18,14 @@ define defaults::useraccount(
 ) {
 
   $username = $name
+  $_real_gid = $gid ? {
+    undef   => $username,
+    default => $gid,
+  }
 
   user { "$username":
     ensure         => $ensure,
-    gid            => $gid ? {
-      undef   => $username,
-      default => $gid,
-    },
+    gid            => $_real_gid,
     groups         => $groups,
     comment        => "$fullname,,,",
     home           => $home,
