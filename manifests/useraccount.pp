@@ -41,7 +41,7 @@ define defaults::useraccount(
   }
   if $managehome {
     file { $home:
-      mode => $mode,
+      mode    => $mode,
       require => User[$username],
     }
   }
