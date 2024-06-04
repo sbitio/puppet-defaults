@@ -22,7 +22,7 @@ class defaults (
   Hash $users,
   Hash $useraccount_defaults,
   Hash $useraccounts,
-) inherits defaults::params {
+) {
   # Root account.
   include defaults::root_user
 
