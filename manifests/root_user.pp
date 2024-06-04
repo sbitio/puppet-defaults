@@ -1,10 +1,9 @@
 # == Class: defaults::root_user
 #
 class defaults::root_user (
-  $password            = undef,
-  $ssh_authorized_keys = {},
+  Optional[Sensitive] $password,
+  Hash $ssh_authorized_keys,
 ) {
-
   if $password != undef {
     ensure_resource(
       'user',
@@ -21,6 +20,4 @@ class defaults::root_user (
       user => 'root',
     }
   )
-
 }
-

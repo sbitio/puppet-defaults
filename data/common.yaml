@@ -1,1 +1,36 @@
---- {}
+---
+
+lookup_options:
+  "^defaults::(groups|crons|execs|hosts|files|file_lines|mounts|packages|sshkeys|users|useraccounts)$":
+    merge:
+      strategy: deep
+      knockout_prefix: --KOP_
+  defaults::root_user::ssh_authorized_keys:
+    merge:
+      strategy: deep
+      knockout_prefix: --KOP_
+
+defaults::groups: []
+defaults::cron_defaults: {}
+defaults::crons: {}
+defaults::exec_defaults: {}
+defaults::execs: {}
+defaults::host_defaults: {}
+defaults::hosts: {}
+defaults::file_defaults: {}
+defaults::files: {}
+defaults::file_line_defaults: {}
+defaults::file_lines: {}
+defaults::mount_defaults: {}
+defaults::mounts: {}
+defaults::package_defaults: {}
+defaults::packages: {}
+defaults::sshkey_defaults: {}
+defaults::sshkeys: {}
+defaults::user_defaults: {}
+defaults::users: {}
+defaults::useraccount_defaults: {}
+defaults::useraccounts: {}
+
+defaults::root_user::password: null
+defaults::root_user::ssh_authorized_keys: {}
