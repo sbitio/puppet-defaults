@@ -32,5 +32,5 @@ defaults::users: {}
 defaults::useraccount_defaults: {}
 defaults::useraccounts: {}
 
-defaults::root_user::password: null
+defaults::root_user::password: ~
 defaults::root_user::ssh_authorized_keys: {}
