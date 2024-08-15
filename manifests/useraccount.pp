@@ -2,7 +2,7 @@
 #
 # Based on https://github.com/dcsobral/puppet-users/blob/master/manifests/definitions/useraccount.pp
 #
-define defaults::useraccount(
+define defaults::useraccount (
   $ensure         = present,
   $uid            = undef,
   $gid            = undef,
@@ -16,7 +16,6 @@ define defaults::useraccount(
   $purge_ssh_keys = false,
   $ssh_keys       = {}
 ) {
-
   $username = $name
   $_real_gid = $gid ? {
     undef   => $username,
@@ -48,10 +47,10 @@ define defaults::useraccount(
 
   # Ordering of dependencies, just in case
   case $ensure {
-    present: {
+    'present': {
       User <| title == $username |> { require => Group[$username] }
     }
-    absent: {
+    'absent': {
       Group <| title == $username |> { require => User[$username] }
     }
     default: {
@@ -74,5 +73,4 @@ define defaults::useraccount(
       }
     }
   }
-
 }
