@@ -14,7 +14,9 @@ define defaults::useraccount (
   $password       = '',
   $fullname       = $title,
   $purge_ssh_keys = false,
-  $ssh_keys       = {}
+  $ssh_keys       = {},
+  Array $subdirs  = [],
+  Optional[Hash] $acl = undef
 ) {
   $username = $name
   $_real_gid = $gid ? {
@@ -42,6 +44,21 @@ define defaults::useraccount (
     file { $home:
       mode    => $mode,
       require => User[$username],
+    }
+    $_subdirs = unique($subdirs + ['.ssh', 'nobackup'])
+    $_subdirs.each |$subdir| {
+      $subdir_real = "${home}/${subdir}"
+      file { $subdir_real:
+        ensure => directory,
+        owner  => $username,
+        group  => $username,
+      }
+      if ($acl) {
+        posix_acl { $subdir_real:
+          *       => $acl,
+          require => File[$subdir_real],
+        }
+      }
     }
   }
 
